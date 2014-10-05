@@ -8,8 +8,6 @@ class ReplayWriter:
     """
         Replay file writing class.
     """
-    
-    FILE_EXT = ".atbp"
 
     def __init__(self, path):
         """
@@ -17,10 +15,23 @@ class ReplayWriter:
         """
         
         self.f = open(path, "w")
-    
-    def write_action(self, action):
+
+    def close(self):
+        """
+            Closes the file.
+        """
+        
+        self.f.close()
+
+    def write_action(self, timestamp, action):
         """
             Formats the action to the YAML format and writes it out.
         """
         
-        yaml.dump({}, self.f, indent=2, default_flow_style=False)
+        data = [{
+            "time": timestamp,
+            "name": action["c"],
+            "params": action["p"]
+        }]
+        yaml.dump(data, self.f, indent=2, default_flow_style=False)
+        self.f.flush()

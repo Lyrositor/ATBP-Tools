@@ -8,3 +8,7 @@ SOUNDS_URL = ROOT_URL + "assets/sounds/{}.ogg"
 
 # Game Network Protocol
 GAME_PORT = 9933
+
+# Replays
+REPLAY_DIR = "replays"
+REPLAY_EXT = ".atbp"
