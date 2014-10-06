@@ -1,0 +1,119 @@
+/**
+ * ATBP Tools - Replay Player
+ * Styling for the player.
+ */
+
+body {
+    font-family: "Droid Sans", Arial, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+.clear {
+    clear: both;
+}
+
+#intro {
+    border: solid 1px #000000;
+    margin: 10px;
+    padding: 10px;
+}
+
+#intro p, #replay-input {
+    display: inline-block;
+    margin: 0;
+    margin-right: 10px;
+}
+
+#replay-input {
+    background-color: #DDDDDD;
+    border: solid 1px #AAAAAA;
+    padding: 5px;
+}
+
+#time-display {
+    margin: 20px 10px;
+}
+
+#player {
+    background-repeat: no-repeat;
+    display: block;
+    margin: 0 auto;
+}
+
+#player.candy-streets {
+    background-image: url("img/Candy_Streets.png");
+}
+
+#player.battle-lab {
+    background-image: url("img/Battle_Lab.png");
+}
+
+#team-scores {
+    text-align: center;
+}
+
+.team-score {
+    border: solid 2px #000000;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+    padding: 10px;
+    text-align: center;
+    width: 60px;
+}
+
+#team-score-1 {
+    border-color: #388E8E;
+}
+
+#team-score-0 {
+    border-color: #A020F0;
+}
+
+.team {
+    border: solid 2px #000000;
+    padding: 10px;
+}
+
+#team-1 {
+    border-color: #388E8E;
+    float: left;
+}
+
+#team-0 {
+    border-color: #A020F0;
+    float: right;
+}
+
+.player {
+    border: solid 1px #AAAAAA;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px;
+    width: 172px;
+}
+
+.player.player-tournament {
+    border: solid 1px #FFD700;
+}
+
+.player-portrait, .player-name, .player-elo {
+    display: block;
+    text-align: center;
+}
+
+.player-name {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.player-elo {
+    color: #999999;
+    font-style: italic;
+    margin: 5px 0;
+}
+
+.player-property {
+    display: block;
+}
