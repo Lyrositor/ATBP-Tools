@@ -2,7 +2,7 @@
  * ATBP Tools - Replay Player
  * Manages the replay data.
  */
- 
+
 var playerApp = angular.module("playerApp", []);
 
 playerApp.controller("PlayerCtrl", function ($scope, $timeout) {
@@ -125,43 +125,72 @@ function playReplay(actions) {
     function processActions() {
         $scope.time = (new Date().getTime() - start) / 1000;
         var action = actions[i];
-        while (action.time <= $scope.time) {
+        while (action && action.time <= $scope.time) {
             processAction(action);
             // Advance to the next action.
             i += 1;
             var action = actions[i];
         }
-        $timeout(processActions, 100);
+        if (action)
+            $timeout(processActions, 100);
+        else
+            actors = {};
     }
 
     processActions();
 }
 
-function draw(canvas, context, start) {
+function draw(canvas, context, last) {
     // Get the amount of time which has passed.
-    var delta = new Date().getTime() - start;
+    var now = new Date().getTime();
+    var deltaTime = (now - last) / 1000;
 
     // Clear the canvas.
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw every actor.
-    for (var actor in actors) {
+    for (var id in actors) {
+        var actor = actors[id];
+        if (actor.type != "CHAMPION" && actor.type != "MINION")
+            continue;
+
+        // Get the actor's new coordinates.
+        var targetX = actor.dx - actor.x;
+        var targetZ = actor.dz - actor.z;
+        var targetDist = Math.sqrt(
+            Math.pow(targetX, 2),
+            Math.pow(targetZ, 2)
+        );
+        var deltaDist = actor.speed * deltaTime;
+        if (targetDist != 0) {
+            actor.x += deltaDist * targetX/targetDist;
+            actor.z += deltaDist * targetZ/targetDist;
+        }
+        var c = convert_coords(actor.x, actor.z);
+
+        // Begin drawing.
         context.beginPath();
-        context.arc(50, 50, 2, 0, 2*Math.PI);
-        context.fillStyle = "#FF0000";
+        var r = 3;
+        if (actor.type == "CHAMPION")
+            r = 5;
+        context.arc(c.x, c.y, r, 0, 2*Math.PI);
+        if (actor.team == 0)
+            context.fillStyle = "#A020F0";
+        else if (actor.team == 1)
+            context.fillStyle = "#388E8E";
         context.fill();
     }
 
     // Request the drawing of the next frame.
     requestAnimFrame(function() {
-        draw(canvas, context, start);
+        draw(canvas, context, now);
     });
 }
 
 function convert_coords(game_x, game_z) {
-    var canvas_x = 90 + game_x;
-    var canvas_y = 230;
-    return [canvas_x, canvas_y];
+    var canvas_x = -game_x * 340 / 54 + 434;
+    var canvas_y = game_z * 340 / 80 + 225;
+    return {x: canvas_x, y: canvas_y};
 }
 
 function processAction(action) {
@@ -181,16 +210,16 @@ function processAction(action) {
         else
             var champion = p.champion.split("_")[0];
         $scope.players[p.team][p.id] = {
-            "backpack": p.backpack,
-            "champion": champion,
-            "currentHealth": CHAMPIONS[champion].startHealth,
-            "elo": p.elo,
-            "level": 1,
-            "maxHealth": CHAMPIONS[champion].startHealth,
-            "name": p.name,
-            "score": 0,
-            "tournament": p.isTournamentEligible,
-            "xp": 0
+            backpack: p.backpack,
+            champion: champion,
+            currentHealth: CHAMPIONS[champion].startHealth,
+            elo: p.elo,
+            level: 1,
+            maxHealth: CHAMPIONS[champion].startHealth,
+            name: p.name,
+            score: 0,
+            tournament: p.isTournamentEligible,
+            xp: 0
         };
     } else if (n == "cmd_update_actor_data" || n == "cmd_update_script_data") {
         var player = getPlayer(p.id);
@@ -208,13 +237,26 @@ function processAction(action) {
     // Drawing commands.
     else if (n == "cmd_create_actor") {
         actors[p.id] = {
-            "current_x": p.spawn_point.x,
-            "current_z": p.spawn_point.z,
-            "dest_x": p.spawn_point.x,
-            "dest_z": p.spawn_point.z,
-            "speed": 0.0,
-            "type": null
+            x: p.spawn_point.x,
+            z: p.spawn_point.z,
+            dx: p.spawn_point.x,
+            dz: p.spawn_point.z,
+            speed: 0.0,
+            team: p.team,
+            type: p.actorType
         };
+    } else if (n == "cmd_move_actor") {
+        if (p.i in actors) {
+            a = actors[p.i];
+            a.x = p.px;
+            a.z = p.pz;
+            a.dx = p.dx;
+            a.dz = p.dz;
+            a.speed = p.s;
+        }
+    } else if (n == "cmd_destroy_actor") {
+        if (p.id in actors)
+            delete actors[p.id];
     }
 }
 

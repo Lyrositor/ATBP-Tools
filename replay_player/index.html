@@ -23,7 +23,7 @@
         <div class="clear">
         <div class="team" id="team-{{$index}}" ng-show="players" ng-repeat="team in players">
             <div class="player" ng-repeat="player in team" ng-class="{'player-tournament': player.tournament}">
-                <img src="img/champions/{{player.champion}}.jpg" class="player-portrait" width="172" height="120" />
+                <img ng-src="img/champions/{{player.champion}}.jpg" class="player-portrait" width="172" height="120" />
                 <span class="player-name">{{player.name}}</span>
                 <span class="player-elo">{{player.elo}} ELO</span>
                 <span class="player-property"><strong>Backpack:</strong> {{BACKPACKS[player.backpack]}}</span>

@@ -24,14 +24,15 @@ def get_sounds_list(definitions):
         except urllib.error.URLError:
             print("Failed to fetch definition data: " + definition)
             continue
-        
+        with open("definitions/{}.xml".format(definition), "w") as f:
+             f.write(definition_data)
         # Parse it as an XML file.
         try:
             root = ET.fromstring(definition_data)
         except ET.ParseError:
             print("Failed to parse definition data: " + definition)
             continue
-        
+
         # Load the list of sounds.
         for soundObjects in root.iter("soundObjects"):
             for String in soundObjects.iter("String"):
@@ -43,7 +44,7 @@ def download_sounds(sounds_list, output_dir):
     """
         Downloads every file in the list and saves them.
     """
-    
+
     for sound in sorted(sounds_list):
         url = SOUNDS_URL.format(sound)
         print("Downloading " + url)
@@ -54,7 +55,7 @@ def download_sounds(sounds_list, output_dir):
         except urllib.error.URLError:
             print("Failed to fetch sound file: " + sound)
             continue
-        
+
         # Save the data to a file.
         path = os.path.join(output_dir, sound + ".ogg")
         try:
