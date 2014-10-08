@@ -97,7 +97,7 @@ class GameSniffer:
         try:
             packet = IPPacket(bytes(pkt_data[0xE:header.contents.len]))
             if packet.tcp and packet.tcp.atbp:
-                self.process_game_packet(header.contents.ts.tv_sec, packet.tcp.atbp.data)
+                self.process_game_packet(header.contents.ts.tv_sec, packet.tcp.atbp.data.value)
         except ValueError:
             # Not a valid IPv4 packet. Ignore it.
             pass

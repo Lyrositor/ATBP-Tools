@@ -10,11 +10,11 @@ def main():
     """
 
     sniffer = ReplayCreator()
+    print("Running...")
     try:
-        print("Running...")
         sniffer.run()
     except KeyboardInterrupt:
-        print("\r    \n")
+        print("\r    ")
     
     # Wait for the user to exit.
     print("Complete.")
