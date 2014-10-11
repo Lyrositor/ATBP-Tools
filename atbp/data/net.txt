@@ -1,0 +1,16 @@
+# atbp-lib
+# Contains network definitions for ATBP.
+
+game_port   9933
+
+# Packet variable codes
+# Some codes haven't been figured out yet, but can be guessed at.
+vars.bool       0x1
+vars.char       0x2
+vars.short      0x3
+vars.long       0x4
+vars.float      0x6
+vars.double     0x7
+vars.string     0x8
+vars.list       0x11
+vars.dictionary 0x12

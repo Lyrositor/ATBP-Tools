@@ -1,0 +1,9 @@
+# atbp-lib
+# Lists sounds which cannot be found in the definition files.
+
+music/music_main2
+music/music_main3
+not_allowed_error
+sfx_champion_respawn
+sfx_gems_get
+sfx_generic_hit

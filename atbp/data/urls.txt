@@ -1,0 +1,11 @@
+# atbp-lib
+# Contains URL's relating to ATBP.
+
+# Resource URL's
+root        http://ht.cdn.turner.com/toon/big/champions/20140915/
+definitions definitions/{}.xml
+sounds      assets/sounds/{}.ogg
+
+# Servers
+facade      ctn-facade.turner.com
+lobby       ctn-games-lobby-ha-1.turner.com

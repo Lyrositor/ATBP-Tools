@@ -1,0 +1,148 @@
+/**
+ * Replay Player
+ * Styling for the player.
+ */
+
+body {
+    background-color: #ADD8E6;
+    font-family: "Droid Sans", Arial, Verdana, sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+.clear {
+    clear: both;
+}
+
+#title {
+    color: #FFD700;
+    font-size: 280%;
+    margin: 10px auto;
+    text-align: center;
+    width: 430px;
+}
+
+#intro {
+    background-color: #FFFFFF;
+    border: solid 1px #AAAAAA;
+    margin: 10px;
+    padding: 10px;
+}
+
+#replay-input {
+    background-color: #104E8B;
+    border: solid 2px #1E90FF;
+    color: #FFFFFF;
+    padding: 5px;
+}
+
+#player-controls {
+    background-color: #FFFFFF;
+    border: solid 1px #AAAAAA;
+    display: block;
+    margin: 10px auto;
+    padding: 20px 10px;
+    text-align: center;
+    width: 200px;
+}
+
+.player-control {
+    background-color: #104E8B;
+    border: solid 2px #1E90FF;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 15px;
+    margin: 0 5px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    width: 15px;
+}
+
+#player-timer {
+    padding-left: 10px;
+}
+
+#player {
+    background-color: #FFFFFF;
+    border: solid 1px #DDDDDD;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+#team-scores {
+    text-align: center;
+}
+
+.team-score {
+    border: solid 2px #000000;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+    padding: 10px;
+    text-align: center;
+    width: 60px;
+}
+
+#team-score-1 {
+    border-color: #388E8E;
+}
+
+#team-score-0 {
+    border-color: #A020F0;
+}
+
+.team {
+    border: solid 2px #000000;
+    margin: 10px;
+    padding: 10px;
+}
+
+#team-1 {
+    background-color: #388E8E;
+    border-color: #4A708B;
+    float: left;
+}
+
+#team-0 {
+    background-color: #A020F0;
+    border-color: #551A8B;
+    float: right;
+}
+
+.player {
+    background-color: #FAFAFA;
+    border: solid 1px #AAAAAA;
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px;
+    vertical-align: top;
+    width: 172px;
+}
+
+.player.player-tournament {
+    border: solid 1px #FFD700;
+}
+
+.player-portrait, .player-name, .player-elo {
+    display: block;
+    text-align: center;
+}
+
+.player-name {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.player-elo {
+    color: #999999;
+    font-style: italic;
+    margin: 5px 0;
+}
+
+.player-property {
+    display: block;
+}

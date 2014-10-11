@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="playerApp">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ATBP Replay Player</title>
+        <link rel="stylesheet" href="player.css" />
+        <script language="javascript" type="text/javascript" src="lib/angular-file-upload-shim.min.js"></script>
+        <script language="javascript" type="text/javascript" src="lib/angular.min.js"></script>
+        <script language="javascript" type="text/javascript" src="lib/angular-file-upload.min.js"></script>
+        <script language="javascript" type="text/javascript" src="lib/js-yaml.min.js"></script>
+        <script language="javascript" type="text/javascript" src="data.js"></script>
+        <script language="javascript" type="text/javascript" src="map_canvas.js"></script>
+        <script language="javascript" type="text/javascript" src="replay.js"></script>
+        <script language="javascript" type="text/javascript" src="player.js"></script>
+    </head>
+    <body ng-controller="PlayerCtrl">
+        <h1 id="title" ng-hide="replay.isLoaded"><img src="img/Replay_Logo.png" alt="ATBP Replay Player" width="240" height="160" /></h1>
+
+        <div id="intro" ng-hide="replay.isLoaded">
+            <p>The <strong>Replay Player</strong> lets you view replays captured using the <a href="https://github.com/Lyrositor/ATBP-Tools">Replay Recorder</a>. Currently, only replays for the multiplayer map (<code>2L_Arena</code>) are supported. <strong style="color: red">The Replay Player currently only works on Google Chrome.</strong></p>
+            <p>Open your <code>.atbp</code> replay file:<p>
+            <input type="file" id="replay-input" ng-file-select="loadReplay($files)" />
+        </div>
+
+        <div id="player-controls" ng-show="replay.isLoaded">
+            <a href="#" class="player-control" id="play" ng-click="replay.play()">&#9658;</a>
+            <a href="#" class="player-control" id="pause" ng-click="replay.pause()">&#8214;</a>
+            <a href="#" class="player-control" id="stop" ng-click="replay.stop()">&#9724;</a>
+            <span id="player-timer">{{replay.time.toFixed(1)}}s/{{ceil(replay.totalTime, 2).toFixed(1)}}s</span>
+        </div>
+
+        <canvas id="player" width="800" height="500" ng-show="replay.isLoaded"></canvas>
+
+        <div id="team-scores" ng-show="replay.isLoaded">
+            <div id="team-score-1" class="team-score">{{replay.teams[1].score}}</div>
+            <div id="team-score-0" class="team-score">{{replay.teams[0].score}}</div>
+        </div>
+        <div class="clear">
+
+        <div class="team" id="team-{{$index}}" ng-show="replay.isLoaded" ng-repeat="team in replay.teams">
+            <div class="player" ng-repeat="i in team.players" ng-class="{'player-tournament': replay.players[i].isTournamentEligible}">
+                <img ng-src="img/champions/{{replay.players[i].champion}}.jpg" class="player-portrait" width="172" height="120" />
+                <span class="player-name">{{replay.players[i].name}}</span>
+                <span class="player-elo">{{replay.players[i].elo}} ELO</span>
+                <span class="player-property"><strong>Backpack:</strong> {{replay.players[i].backpack}} ({{replay.players[i].spCategories.join("/")}})</span>
+                <span class="player-property"><strong>Health:</strong> {{replay.players[i].health}}/{{replay.players[i].maxHealth}}</span>
+                <span class="player-property"><strong>Level:</strong> {{replay.players[i].level}} ({{replay.players[i].xp}} XP)</span>
+                <span class="player-property"><strong>Score:</strong> {{replay.players[i].score}}</span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </body>
+</html>
