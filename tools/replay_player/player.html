@@ -10,6 +10,7 @@
         <script language="javascript" type="text/javascript" src="lib/js-yaml.min.js"></script>
         <script language="javascript" type="text/javascript" src="data.js"></script>
         <script language="javascript" type="text/javascript" src="map_canvas.js"></script>
+        <script language="javascript" type="text/javascript" src="actors.js"></script>
         <script language="javascript" type="text/javascript" src="replay.js"></script>
         <script language="javascript" type="text/javascript" src="player.js"></script>
     </head>
@@ -18,15 +19,31 @@
 
         <div id="intro" ng-hide="replay.isLoaded">
             <p>The <strong>Replay Player</strong> lets you view replays captured using the <a href="https://github.com/Lyrositor/ATBP-Tools">Replay Recorder</a>. Currently, only replays for the multiplayer map (<code>2L_Arena</code>) are supported. <strong style="color: red">The Replay Player currently only works on Google Chrome.</strong></p>
+            <p><strong>Sounds:</strong> to play sounds, run the sounds downloader tool and copy the downloaded files to the <code>sounds</code> folder.</p>
             <p>Open your <code>.atbp</code> replay file:<p>
             <input type="file" id="replay-input" ng-file-select="loadReplay($files)" />
+        </div>
+
+        <div class="kofeed" id="kofeed-1" ng-show="replay.isLoaded">
+            <div class="ko" ng-repeat="ko in replay.KOFeed" ng-class="ko.class[1]" ng-hide="ko.expired">
+                <img ng-src="img/portraits/{{ko.killer}}.png" class="ko-killer" width="64" height="64" />
+                <img ng-src="img/ko/KO_Sword.png" class="ko-sword" width="32" height="32" />
+                <img ng-src="img/portraits/{{ko.killed}}.png" class="ko-killed" width="64" height="64" />
+            </div>
+        </div>
+        <div class="kofeed" id="kofeed-0" ng-show="replay.isLoaded">
+            <div class="ko" ng-repeat="ko in replay.KOFeed" ng-class="ko.class[0]" ng-hide="ko.expired">
+                <img ng-src="img/portraits/{{ko.killer}}.png" class="ko-killer" width="64" height="64" />
+                <img ng-src="img/ko/KO_Sword.png" class="ko-sword" width="32" height="32" />
+                <img ng-src="img/portraits/{{ko.killed}}.png" class="ko-killed" width="64" height="64" />
+            </div>
         </div>
 
         <div id="player-controls" ng-show="replay.isLoaded">
             <a href="#" class="player-control" id="play" ng-click="replay.play()">&#9658;</a>
             <a href="#" class="player-control" id="pause" ng-click="replay.pause()">&#8214;</a>
             <a href="#" class="player-control" id="stop" ng-click="replay.stop()">&#9724;</a>
-            <span id="player-timer">{{replay.time.toFixed(1)}}s/{{ceil(replay.totalTime, 2).toFixed(1)}}s</span>
+            <span id="player-timer">{{replay.time/60|number:0}}:{{replay.time%60|number:0|numberPad:2}}/{{replay.totalTime/60|number:0}}:{{replay.totalTime%60|number:0|numberPad:2}}</span>
         </div>
 
         <canvas id="player" width="800" height="500" ng-show="replay.isLoaded"></canvas>
@@ -38,13 +55,14 @@
         <div class="clear">
 
         <div class="team" id="team-{{$index}}" ng-show="replay.isLoaded" ng-repeat="team in replay.teams">
-            <div class="player" ng-repeat="i in team.players" ng-class="{'player-tournament': replay.players[i].isTournamentEligible}">
-                <img ng-src="img/champions/{{replay.players[i].champion}}.jpg" class="player-portrait" width="172" height="120" />
+            <div class="player" ng-repeat="i in team.players" ng-class="{'player-tournament': replay.players[i].isTournamentEligible, 'player-dead': replay.players[i].isDead}">
+                <span class="player-kda">{{replay.players[i].kills}}-{{replay.players[i].deaths}}-{{replay.players[i].assists}}</span>
+                <img ng-src="img/portraits/{{replay.players[i].champion}}.png" class="player-portrait" width="128" height="128" />
                 <span class="player-name">{{replay.players[i].name}}</span>
                 <span class="player-elo">{{replay.players[i].elo}} ELO</span>
                 <span class="player-property"><strong>Backpack:</strong> {{replay.players[i].backpack}} ({{replay.players[i].spCategories.join("/")}})</span>
                 <span class="player-property"><strong>Health:</strong> {{replay.players[i].health}}/{{replay.players[i].maxHealth}}</span>
-                <span class="player-property"><strong>Level:</strong> {{replay.players[i].level}} ({{replay.players[i].xp}} XP)</span>
+                <span class="player-property"><strong>Level:</strong> {{replay.players[i].level}} </span>
                 <span class="player-property"><strong>Score:</strong> {{replay.players[i].score}}</span>
             </div>
         </div>

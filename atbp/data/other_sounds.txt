@@ -3,6 +3,8 @@
 
 music/music_main2
 music/music_main3
+music/sting_towerdown1
+music/sting_towerdown_long
 not_allowed_error
 sfx_champion_respawn
 sfx_gems_get

@@ -1,0 +1,1 @@
+If you want the Replay Player to play sounds, run the Sounds Downloader tool and copy the downloaded sound files to this directory.

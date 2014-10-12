@@ -3,21 +3,24 @@
  * Manages the replay data.
  */
 
-var playerApp = angular.module("playerApp", ["angularFileUpload"]);
+var playerApp = angular.module("playerApp", ["angularFileUpload"])
+    .filter("numberPad", function () {
+        return function (n, len) {
+            var num = parseInt(n, 10);
+            len = parseInt(len, 10);
+            if (isNaN(num) || isNaN(len))
+                return n;
+            num = "" + num;
+            while (num.length < len)
+                num = '0'+num;
+            return num;
+        };
+    });
 
 playerApp.controller("PlayerCtrl", function ($scope, $timeout) {
 
     $scope.replay = null;
 
-    // "Fix" for the Math.ceil function.
-    // Allows for rounding up to the nearest real number, as determined by the
-    // precision.
-    $scope.ceil = function(number, precision) {
-        precision = Math.abs(parseInt(precision)) || 0;
-        var coefficient = Math.pow(10, precision);
-        return Math.ceil(number*coefficient)/coefficient;
-    }
-    
     $scope.loadReplay = function($files) {
         var file = $files[0];
         var reader = new FileReader();

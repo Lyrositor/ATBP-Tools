@@ -82,3 +82,9 @@ var CHAMPIONS = {
         healthPerLevel: 35
     }
 };
+
+var COLORS = {
+    0: "#813C8C",
+    1: "#268A96",
+    2: "#FFFFFF"
+};

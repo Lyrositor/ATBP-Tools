@@ -61,7 +61,8 @@ body {
 }
 
 #player-timer {
-    padding-left: 10px;
+    display: block;
+    margin-top: 10px;
 }
 
 #player {
@@ -88,11 +89,11 @@ body {
 }
 
 #team-score-1 {
-    border-color: #388E8E;
+    border-color: #268A96;
 }
 
 #team-score-0 {
-    border-color: #A020F0;
+    border-color: #813C8C;
 }
 
 .team {
@@ -102,13 +103,13 @@ body {
 }
 
 #team-1 {
-    background-color: #388E8E;
+    background-color: #268A96;
     border-color: #4A708B;
     float: left;
 }
 
 #team-0 {
-    background-color: #A020F0;
+    background-color: #813C8C;
     border-color: #551A8B;
     float: right;
 }
@@ -117,18 +118,34 @@ body {
     background-color: #FAFAFA;
     border: solid 1px #AAAAAA;
     display: inline-block;
+    font-size: 120%;
+    line-height: 140%;
     margin: 0 10px;
     padding: 5px;
     vertical-align: top;
-    width: 172px;
+    width: 200px;
 }
 
 .player.player-tournament {
     border: solid 1px #FFD700;
 }
 
+.player.player-dead {
+    background-color: #DDDDDD;
+    color: #666666;
+}
+
+.player-kda {
+    display: block;
+    font-size: 140%;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
 .player-portrait, .player-name, .player-elo {
     display: block;
+    margin: 0 auto;
     text-align: center;
 }
 
@@ -145,4 +162,54 @@ body {
 
 .player-property {
     display: block;
+    margin: 5px 0;
+}
+
+.kofeed {
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 196px;
+}
+
+#kofeed-1 {
+    left: 0;
+    text-align: left;
+}
+
+#kofeed-0 {
+    right: 0;
+    text-align: right;
+}
+
+.ko {
+    background-repeat: no-repeat;
+    height: 92px;
+    width: 196px;
+}
+
+.ko-green {
+    background-image: url("img/ko/KO_Green.png");
+}
+
+.ko-red {
+    background-image: url("img/ko/KO_Red.png");
+}
+
+.ko-sword {
+    position: absolute;
+    left: 90px;
+    top: 40px;
+}
+
+.ko-killer {
+    position: absolute;
+    top: 25px;
+    left: 23px;
+}
+
+.ko-killed {
+    position: absolute;
+    top: 25px;
+    right: 23px;
 }
