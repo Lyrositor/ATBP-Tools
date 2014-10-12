@@ -35,6 +35,7 @@ class ReplayRecorder(GameInterceptor):
             # Check to see if this is the first relevant message.
             if data["a"] != 0:
                 return
+            print("Match started. Now recording.")
             self.match_start = time.time()
             self.replay.entries = []
 
