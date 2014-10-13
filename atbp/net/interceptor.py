@@ -37,8 +37,6 @@ class Interceptor:
         except:
             print("---------------- ERROR ----------------")
             print("Failed to open {}. Make sure it's present in your working directory.".format(self.DRIVER))
-            print("Note: remember to rename WinDivert32.dll to {} if you have a 32-bit system.".format(self.DRIVER))
-            print("Likewise, rename WinDivert64.dll to {} if you have a 64-bit system.".format(self.DRIVER))
             return
         with Handle(driver, filter=self.rule, priority=1000) as handle:
             while True:
