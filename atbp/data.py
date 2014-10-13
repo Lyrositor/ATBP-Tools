@@ -2,9 +2,9 @@
 # Utilities for reading data from the data files.
 
 import os.path
-from pkg_resources import resource_filename as rf
+import sys
 
-DATA_DIR = rf(__name__, "data")
+DATA_DIR = os.path.join("atbp", "data")
 
 def get_data(name):
     """
@@ -17,7 +17,7 @@ def get_data(name):
 
     try:
         data = {}
-        with open(os.path.join(DATA_DIR, name + ".txt"), "r") as f:
+        with open(os.path.join(DATA_DIR, name + ".txt")) as f:
             for line in f.readlines():
                 # Read the line's information.
                 l = line.strip()

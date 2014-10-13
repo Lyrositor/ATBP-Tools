@@ -2,14 +2,10 @@
 # Base Interceptor
 # Use as a base for intercepting game packets.
 
-import sys
-sys.path.append("..")
-
 import traceback
 
 from atbp.net.interceptor import GameInterceptor
 from atbp.net.protocol import GamePacket
-
 
 def packet_handler(game_packet):
     """
@@ -24,17 +20,20 @@ def packet_handler(game_packet):
 
     return packet
 
-def main():   
+def start_interceptor():
     interceptor = GameInterceptor(packet_handler)
     try:
         interceptor.run()
     except KeyboardInterrupt:
         pass
 
-if __name__ == "__main__":
+def main():   
     try:
-        main()
+        start_interceptor()
     except:
         traceback.print_exc()
     finally:
         input("Press Enter to exit.")
+
+if __name__ == "__main__":
+    main()

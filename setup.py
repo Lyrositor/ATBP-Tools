@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 # ATBP-Tools
-# Setup script for the Replay Recorder.
+# Setup script for the tools
 # Make sure you have a lib/ folder with the required folders before running
 # the setup.
 
-from distutils.core import *
-import os.path
+from setuptools import setup, find_packages
+import glob
+import os
 import platform
 import py2exe
 import sys
-
-sys.argv.append("py2exe")
 
 if sys.maxsize > 2**32:
     lib = [
@@ -26,26 +25,26 @@ else:
     ]
 
 setup(
-    name="ReplayRecorder",
-    description="Adventure Time Battle Party Replay Recorder",
+    name="ATBP-Tools",
+    description="A collection of tools for use with Adventure Time Battle Party.",
     author="Lyrositor",
     version="1.0",
     license="WTFPL",
+    url="https://github.com/Lyrositor/ATBP-Tools",
 
-    packages=["atbp"],
-    package_dir={
-        "atbp": "atbp"
-    },
-    package_data={
-        "atbp": ["atbp/data/*.txt"]
-    },
+    packages=find_packages(exclude="tools"),
+    install_requires=["pydivert", "PyYAML"],
     
-    console=["tools/replay_recorder.py"],
-    options={"py2exe": {"bundle_files": 1}},
+    console=["tools/replay_recorder.py", "tools/sounds_downloader.py"],
+    options={"py2exe": {"bundle_files": 1, "optimize": 2}},
     zipfile=None,
     
     data_files=[
         ("", ["LICENSE.txt", "README.md"] + lib),
+        (
+            os.path.join("atbp", "data"),
+            glob.glob(os.path.join("atbp", "data", "*.txt"))
+        )
     ]
 )
 

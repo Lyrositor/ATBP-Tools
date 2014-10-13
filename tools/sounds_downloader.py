@@ -2,9 +2,6 @@
 # Sounds Downloader
 # Downloads all known sound files.
 
-import sys
-sys.path.append("..")
-
 import traceback
 
 from atbp.data import *
@@ -60,7 +57,7 @@ def format_tree(tree, level=0, files=False, parent=""):
 
     return markdown
 
-def main():
+def sounds_downloader():
     # Prompt the user for the download folder path.
     download_path = input("Please enter the download folder path (default: ATBP_sounds): ")
     if not download_path:
@@ -87,10 +84,13 @@ def main():
 
     print("Complete.")
 
-if __name__ == "__main__":
+def main():
     try:
-        main()
+        sounds_downloader()
     except:
         traceback.print_exc()
     finally:
         input("Press Enter to exit.")
+
+if __name__ == "__main__":
+    main()
