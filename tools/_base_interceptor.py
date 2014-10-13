@@ -37,4 +37,4 @@ if __name__ == "__main__":
     except:
         traceback.print_exc()
     finally:
-        input("\nPress Enter to exit.")
+        input("Press Enter to exit.")

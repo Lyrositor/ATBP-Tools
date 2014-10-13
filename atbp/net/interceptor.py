@@ -2,14 +2,8 @@
 # The Interceptor is used to intercept and modify network packets.
 
 import struct
-import sys
 
-# Try to import windivert.
-try:
-    from pydivert.windivert import *
-except ImportError:
-    print("Failed to import pydivert. Make sure it is installed.")
-    sys.exit(1)
+from pydivert.windivert import *
 
 from .protocol import GamePacket
 
@@ -19,7 +13,7 @@ class Interceptor:
         Listens for network packets and calls a handler for each one.
     """
     
-    DRIVER = r"DLLs\WinDivert.dll"
+    DRIVER = "WinDivert.dll"
     
     GAME_PACKET_RULE = "tcp.DstPort == 9933 or tcp.SrcPort == 9933"
     GAME_PACKET_RULE_O = "outbound and tcp.DstPort == 9933"
@@ -38,7 +32,14 @@ class Interceptor:
             Listens for packets matching the rule and handles them.
         """
         
-        driver = WinDivert(self.DRIVER)
+        try:
+            driver = WinDivert(self.DRIVER)
+        except:
+            print("---------------- ERROR ----------------")
+            print("Failed to open {}. Make sure it's present in your working directory.".format(self.DRIVER))
+            print("Note: remember to rename WinDivert32.dll to {} if you have a 32-bit system.".format(self.DRIVER))
+            print("Likewise, rename WinDivert64.dll to {} if you have a 64-bit system.".format(self.DRIVER))
+            return
         with Handle(driver, filter=self.rule, priority=1000) as handle:
             while True:
                 packet = handle.receive()

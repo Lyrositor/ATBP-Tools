@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# Replay Client
-# Allows for the creation and playback of replays.
+# Replay Recorder
+# Allows for the creation of replays.
 
 import sys
 sys.path.append("..")
@@ -8,7 +8,6 @@ sys.path.append("..")
 import traceback
 
 from atbp.replays.recorder import ReplayRecorder
-    
 
 def record_replay(replay_path):
     """
@@ -35,4 +34,4 @@ if __name__ == "__main__":
     except:
         traceback.print_exc()
     finally:
-        input("\nPress Enter to exit.")
+        input("Press Enter to exit.")
