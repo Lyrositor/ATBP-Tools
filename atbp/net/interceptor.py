@@ -75,9 +75,12 @@ class GameInterceptor(Interceptor):
                 if len(packet.payload) >= 3:
                     length = struct.unpack(">H", packet.payload[i + 1:i + 3])[0]
                     if len(packet.payload[i + 3:i + 3 + length]) == length:
-                        game_packet = GamePacket(packet.payload[i:])
-                        i += game_packet.length + 3
-                        self.game_packet_handler(game_packet)
+                        try:
+                            game_packet = GamePacket(packet.payload[i:])
+                            self.game_packet_handler(game_packet)
+                        except:
+                            print("Invalid packet. Ignoring.")
+                        i += length + 3
                     else:
                         self.leftover = packet.payload[i:]
                         break
@@ -88,9 +91,13 @@ class GameInterceptor(Interceptor):
             # Otherwise, try to reassemble it from the last packet.
             elif self.leftover and i == 0:
                 reassembled_data = self.leftover + packet.payload
-                game_packet = GamePacket(reassembled_data)
-                i += game_packet.length + 3 - len(self.leftover)
-                self.game_packet_handler(game_packet)
+                length = struct.unpack(">H", reassembled_data[i + 1:i + 3])[0]
+                try:
+                    game_packet = GamePacket(reassembled_data)
+                    self.game_packet_handler(game_packet)
+                except:
+                    print("Invalid packet. Ignoring.")
+                i += length + 3 - len(self.leftover)
                 self.leftover = None
             
             # Otherwise, this is an unknown packet.

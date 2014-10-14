@@ -12,23 +12,27 @@ import py2exe
 import sys
 
 if sys.maxsize > 2**32:
-    lib = [
+    ARCH="x64"
+    LIB = [
         "lib/x64/vcredist_x64.exe",
         "lib/x64/WinDivert.dll",
         "lib/x64/WinDivert64.sys"
     ]
 else:
-    lib = [
+    ARCH="x86"
+    LIB = [
         "lib/x86/vcredist_x86.exe",
         "lib/x86/WinDivert.dll",
         "lib/x86/WinDivert32.sys",
     ]
 
+VERSION = "1.0"
+
 setup(
     name="ATBP-Tools",
     description="A collection of tools for use with Adventure Time Battle Party.",
     author="Lyrositor",
-    version="1.0",
+    version=VERSION,
     license="WTFPL",
     url="https://github.com/Lyrositor/ATBP-Tools",
 
@@ -40,7 +44,7 @@ setup(
     zipfile=None,
     
     data_files=[
-        ("", ["LICENSE.txt", "README.md"] + lib),
+        ("", ["LICENSE.txt", "README.md"] + LIB),
         (
             os.path.join("atbp", "data"),
             glob.glob(os.path.join("atbp", "data", "*.txt"))
