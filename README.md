@@ -11,7 +11,7 @@ Tools
 These are the tools which have currently been developed:
 
 * **Replay Player**: a web application for playing back replays. There is a demo available [here](http://lyros.net/atbp/replay_player_demo2/) (note that you can use the demo to play back any replay file, not just the demo replay).
-* **Replay Recorder**: records matches for viewing later on the Replay Player. *Only available for Windows.*
+* **Replay Recorder**: records matches for viewing later on the Replay Player. *Only available for Windows. Must be run with Administrator rights (right-click on file to do so, or disable UAC).*
 * **Sounds Downloader**: downloads all known files to disk.
 
 Installation
